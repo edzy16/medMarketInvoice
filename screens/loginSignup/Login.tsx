@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, Image } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 
 const Title = styled.Text`
   font-size: 24px;
@@ -35,6 +36,11 @@ const ButtonText = styled.Text`
 `;
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState([]);
+
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.container}>
       <Image
@@ -47,6 +53,15 @@ const Login = () => {
       <Button>
         <ButtonText>Sign In</ButtonText>
       </Button>
+      <Text style={{ margin: 20 }}>
+        Don't have an account?
+        <ButtonText
+          style={{ color: "blue" }}
+          onPress={() => navigation.navigate("SignUp" as never)}
+        >
+          Sign up
+        </ButtonText>
+      </Text>
     </SafeAreaView>
   );
 };
