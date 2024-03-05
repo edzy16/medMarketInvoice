@@ -69,7 +69,13 @@ const Login = () => {
           setSnackbarColor(true);
           console.log(data.status.message);
           // Navigate to the login screen
-          navigation.navigate("Home", { email: email, password: password });
+          navigation.navigate("Home", {
+            email: email,
+            password: password,
+            userId: data.data[0].userId,
+            userName: data.data[0].fullName,
+            userRole: data.data[0].role,
+          });
         } else {
           setVisible(true);
           setSnackbarMessage("Login failed");
