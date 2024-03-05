@@ -5,16 +5,21 @@ type Props = {
   visible: boolean;
   onDismiss: () => void;
   message: string;
-  bgColor: boolean;
+  snackbarColor: boolean;
 };
 
-const CustomSnackbar = ({ visible, onDismiss, message, bgColor }: Props) => {
+const CustomSnackbar = ({
+  visible,
+  onDismiss,
+  message,
+  snackbarColor,
+}: Props) => {
   return (
     <Snackbar
       visible={visible}
       onDismiss={onDismiss}
       duration={Snackbar.DURATION_SHORT}
-      style={{ backgroundColor: bgColor ? "#93af5f" : "#af645f" }}
+      style={{ backgroundColor: snackbarColor ? "#93af5f" : "#af645f" }}
       action={{
         label: "X",
         onPress: onDismiss,
