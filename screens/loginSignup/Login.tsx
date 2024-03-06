@@ -63,24 +63,24 @@ const Login = () => {
       .then((data) => {
         console.log("POST request successful:", data);
         // Handle the response data dynamically
-        if (data.status === "200") {
+        if (data && data.status === "200") {
           setVisible(true);
           setSnackbarMessage("Login successful");
           setSnackbarColor(true);
-          console.log(data.status.message);
-          // Navigate to the login screen
+          console.log(data.message);
+          // Navigate to the Home screen
           navigation.navigate("Home", {
             email: email,
             password: password,
-            userId: data.data[0].userId,
-            userName: data.data[0].fullName,
-            userRole: data.data[0].role,
+            userId: data.data[0]?.userId,
+            userName: data.data[0]?.fullName,
+            userRole: data.data[0]?.role,
           });
         } else {
           setVisible(true);
           setSnackbarMessage("Login failed");
           setSnackbarColor(false);
-          console.log(data.message);
+          console.log(data?.message);
         }
       })
       .catch((error) => {

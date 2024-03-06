@@ -1,5 +1,13 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from "react";
+import { Button, IconButton, MD3Colors } from "react-native-paper";
 
 type Props = {
   email: string;
@@ -9,12 +17,20 @@ type Props = {
   userRole: string;
 };
 
-const Home = ({ email, password, userId, userName, userRole }: Props) => {
-  console.log("Homescreen", email, password, userId, userName, userRole);
+const Home = ({ route }) => {
+  const { email, password, userId, userName, userRole }: Props = route.params;
+  console.log("Home", email, password, userId, userName, userRole);
 
   return (
     <SafeAreaView style={styles.container}>
       <Text>Home</Text>
+      <IconButton
+        icon="camera"
+        iconColor={MD3Colors.error70}
+        size={50}
+        onPress={() => console.log("Pressed")}
+        style={styles.button}
+      />
     </SafeAreaView>
   );
 };
@@ -24,5 +40,13 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0, // Adjust for status bar height on Android
+    position: "relative",
+  },
+  button: {
+    position: "absolute",
+    bottom: 35,
+    right: 25,
+    backgroundColor: "black",
   },
 });

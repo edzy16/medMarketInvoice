@@ -13,9 +13,7 @@ import { getCurrentLocation } from "../../utils/CurrentLocation";
 import { postData } from "../../utils/Services";
 import { useNavigation } from "@react-navigation/native";
 
-type Props = {};
-
-const SignUp = (props: Props) => {
+const SignUp = () => {
   const navigation = useNavigation<any>();
 
   const [name, setName] = useState("");
