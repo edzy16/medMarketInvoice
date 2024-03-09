@@ -25,6 +25,7 @@ const SignUp = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [currentLocation, setCurrentLocation] = useState(null);
   const [snackbarColor, setSnackbarColor] = useState(false); // false for red, true for green
+  const [modalVisible, setModalVisible] = useState(false);
 
   const callSubmitApi = () => {
     console.log("callSubmitApi");
@@ -34,10 +35,12 @@ const SignUp = () => {
       password: password,
       fullName: name,
       role: role,
+      latitude: currentLocation ? currentLocation.coords.latitude : null,
+      longitude: currentLocation ? currentLocation.coords.longitude : null,
     };
     console.log(data);
 
-    postData("register", data)
+    postData("user/register", data)
       .then((data) => {
         console.log("POST request successful:", data);
         // Handle the response data dynamically
@@ -173,6 +176,7 @@ const SignUp = () => {
         </View>
       )}
       <Button title="Register" onPress={handleSignUp} />
+
       <CustomSnackbar
         visible={visible}
         onDismiss={() => setVisible(false)}

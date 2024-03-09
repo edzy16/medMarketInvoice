@@ -62,7 +62,7 @@ const Login = () => {
     };
     setModalVisible(true);
     console.log(data);
-    postData("login", data)
+    postData("user/login", data)
       .then((data) => {
         console.log("POST request successful:", data);
         // Handle the response data dynamically

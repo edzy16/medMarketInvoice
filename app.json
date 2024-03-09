@@ -38,6 +38,12 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow medMarketInvoice to use your location."
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "permission": "Allow medMarketInvoice to access your photos"
+        }
       ]
     ]
   }
