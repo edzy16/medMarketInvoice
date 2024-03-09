@@ -19,7 +19,10 @@ type Props = {
 
 const Home = ({ route }) => {
   const { email, password, userId, userName, userRole }: Props = route.params;
-  console.log("Home", email, password, userId, userName, userRole);
+  console.log("In Home =", email, password, userId, userName, userRole);
+  function handleCameraButtonClick() {
+    console.log("Camera button clicked");
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -28,7 +31,7 @@ const Home = ({ route }) => {
         icon="camera"
         iconColor={MD3Colors.error70}
         size={50}
-        onPress={() => console.log("Pressed")}
+        onPress={() => handleCameraButtonClick()}
         style={styles.button}
       />
     </SafeAreaView>

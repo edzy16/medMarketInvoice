@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { postData } from "../../utils/Services";
 import CustomSnackbar from "../../components/customSnackbar";
+import LottieModal from "../../components/LottieModal";
 
 const Title = styled.Text`
   font-size: 24px;
@@ -43,6 +44,7 @@ const Login = () => {
   const [visible, setVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarColor, setSnackbarColor] = useState(false); // false for red, true for green
+  const [modalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation<any>();
 
@@ -58,12 +60,14 @@ const Login = () => {
       email: email,
       password: password,
     };
+    setModalVisible(true);
     console.log(data);
     postData("login", data)
       .then((data) => {
         console.log("POST request successful:", data);
         // Handle the response data dynamically
         if (data && data.status === "200") {
+          setModalVisible(false);
           setVisible(true);
           setSnackbarMessage("Login successful");
           setSnackbarColor(true);
@@ -77,6 +81,7 @@ const Login = () => {
             userRole: data.data[0]?.role,
           });
         } else {
+          setModalVisible(false);
           setVisible(true);
           setSnackbarMessage("Login failed");
           setSnackbarColor(false);
@@ -114,6 +119,14 @@ const Login = () => {
           Sign up
         </ButtonText>
       </Text>
+
+      {modalVisible && (
+        <LottieModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          path={require("../../assets/login-loading.json")}
+        />
+      )}
       <CustomSnackbar
         visible={visible}
         onDismiss={() => setVisible(false)}
