@@ -35,8 +35,11 @@ const SignUp = () => {
       password: password,
       fullName: name,
       role: role,
-      latitude: currentLocation ? currentLocation.coords.latitude : null,
-      longitude: currentLocation ? currentLocation.coords.longitude : null,
+      currentLocation: currentLocation
+        ? currentLocation.coords.latitude +
+          "," +
+          currentLocation.coords.longitude
+        : null,
     };
     console.log(data);
 
