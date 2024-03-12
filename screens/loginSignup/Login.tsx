@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, SafeAreaView, Image } from "react-native";
+import { StyleSheet, Text, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { postData } from "../../utils/Services";
 import CustomSnackbar from "../../components/customSnackbar";
 import LottieModal from "../../components/LottieModal";
+import LottieView from "lottie-react-native";
 
 const Title = styled.Text`
   font-size: 24px;
@@ -95,12 +96,18 @@ const Login = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image
-        source={require("../../assets/icons/meds.png")}
+      <LottieView
+        autoPlay
+        source={require("../../assets/prescription-lottie.json")}
         style={styles.icon}
       />
       <Title>Login</Title>
-      <Input placeholder="Email" value={email} onChangeText={setEmail} />
+      <Input
+        placeholder="Email"
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+      />
       <Input
         placeholder="Password"
         value={password}
