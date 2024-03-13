@@ -1,11 +1,4 @@
-import {
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Platform, StatusBar, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Button, IconButton, MD3Colors } from "react-native-paper";
 import takePhoto from "../../utils/OpenCamera";
@@ -13,6 +6,7 @@ import { getCurrentLocation } from "../../utils/CurrentLocation";
 import CustomSnackbar from "../../components/customSnackbar";
 import LottieModal from "../../components/LottieModal";
 import { postMultipartData } from "../../utils/Services";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Props = {
   email: string;

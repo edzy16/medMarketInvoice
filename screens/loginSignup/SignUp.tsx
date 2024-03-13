@@ -1,17 +1,12 @@
 import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  Button,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TextInput, Button, View } from "react-native";
 import CustomSnackbar from "../../components/customSnackbar";
 import { getCurrentLocation } from "../../utils/CurrentLocation";
 import { postData } from "../../utils/Services";
 import { useNavigation } from "@react-navigation/native";
+import LottieModal from "../../components/LottieModal";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUp = () => {
   const navigation = useNavigation<any>();
@@ -28,6 +23,7 @@ const SignUp = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const callSubmitApi = () => {
+    setModalVisible(true);
     console.log("callSubmitApi");
 
     const data = {
@@ -47,7 +43,8 @@ const SignUp = () => {
       .then((data) => {
         console.log("POST request successful:", data);
         // Handle the response data dynamically
-        if (data.status === "success") {
+        if (data.status === "200") {
+          setModalVisible(false);
           setVisible(true);
           setSnackbarMessage(data.message);
           setSnackbarColor(true);
@@ -55,6 +52,7 @@ const SignUp = () => {
           // Navigate to the login screen
           navigation.navigate("Login", { email: email, password: password });
         } else {
+          setModalVisible(false);
           setVisible(true);
           setSnackbarMessage(data.message);
           setSnackbarColor(false);
@@ -179,6 +177,13 @@ const SignUp = () => {
         </View>
       )}
       <Button title="Register" onPress={handleSignUp} />
+      {modalVisible && (
+        <LottieModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          path={require("../../assets/login-loading.json")}
+        />
+      )}
 
       <CustomSnackbar
         visible={visible}

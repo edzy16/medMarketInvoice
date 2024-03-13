@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
@@ -6,6 +6,7 @@ import { postData } from "../../utils/Services";
 import CustomSnackbar from "../../components/customSnackbar";
 import LottieModal from "../../components/LottieModal";
 import LottieView from "lottie-react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 const Title = styled.Text`
   font-size: 24px;
@@ -38,10 +39,17 @@ const ButtonText = styled.Text`
   font-size: 16px;
   font-weight: 500;
 `;
+type Props = {
+  email?: string;
+  password?: string;
+};
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Login = ({
+  email: RegisteredEmail,
+  password: RegisteredPassword,
+}: Props) => {
+  const [email, setEmail] = useState(RegisteredEmail || "");
+  const [password, setPassword] = useState(RegisteredPassword || "");
   const [visible, setVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarColor, setSnackbarColor] = useState(false); // false for red, true for green
@@ -95,52 +103,54 @@ const Login = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <LottieView
-        autoPlay
-        source={require("../../assets/prescription-lottie.json")}
-        style={styles.icon}
-      />
-      <Title>Login</Title>
-      <Input
-        placeholder="Email"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <Input
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button onPress={() => handleLogin()}>
-        <ButtonText>Sign In</ButtonText>
-      </Button>
-      <Text style={{ margin: 20 }}>
-        Don't have an account?
-        <ButtonText
-          style={{ color: "blue" }}
-          onPress={() => navigation.navigate("SignUp" as never)}
-        >
-          Sign up
-        </ButtonText>
-      </Text>
-
-      {modalVisible && (
-        <LottieModal
-          visible={modalVisible}
-          onClose={() => setModalVisible(false)}
-          path={require("../../assets/login-loading.json")}
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <LottieView
+          autoPlay
+          source={require("../../assets/prescription-lottie.json")}
+          style={styles.icon}
         />
-      )}
-      <CustomSnackbar
-        visible={visible}
-        onDismiss={() => setVisible(false)}
-        message={snackbarMessage}
-        snackbarColor={snackbarColor}
-      />
-    </SafeAreaView>
+        <Title>Login</Title>
+        <Input
+          placeholder="Email"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <Input
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <Button onPress={() => handleLogin()}>
+          <ButtonText>Sign In</ButtonText>
+        </Button>
+        <Text style={{ margin: 20 }}>
+          Don't have an account?
+          <ButtonText
+            style={{ color: "blue" }}
+            onPress={() => navigation.navigate("SignUp" as never)}
+          >
+            Sign up
+          </ButtonText>
+        </Text>
+
+        {modalVisible && (
+          <LottieModal
+            visible={modalVisible}
+            onClose={() => setModalVisible(false)}
+            path={require("../../assets/login-loading.json")}
+          />
+        )}
+        <CustomSnackbar
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          message={snackbarMessage}
+          snackbarColor={snackbarColor}
+        />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
